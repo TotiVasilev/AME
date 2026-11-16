@@ -1,0 +1,30 @@
+# Build folders
+build/
+build-xp/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Compiled files
+*.exe
+*.dll
+*.obj
+*.lib
+*.pdb
+*.ilk
+
+# Local databases
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Backup files
+*.bak
+
+# Windows
+Thumbs.db
+Desktop.ini
