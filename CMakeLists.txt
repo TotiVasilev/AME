@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(AME VERSION 0.0.3 LANGUAGES C CXX)
+project(AME VERSION 0.0.4 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,6 +15,7 @@ target_include_directories(sqlite3 PUBLIC
 
 add_executable(AME WIN32
     src/ui/main.cpp
+    src/ui/accounting_window.cpp
     src/ui/companies_window.cpp
     src/data/database.cpp
     src/data/company.cpp

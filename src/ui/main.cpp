@@ -1,9 +1,10 @@
 #include <windows.h>
 #include "companies_window.h"
+#include "accounting_window.h"
 
 // =====================================
 // AME - Accounting Made Easy
-// Version 0.0.2
+// Version 0.0.4
 // =====================================
 
 // Application colors
@@ -29,6 +30,7 @@ HWND statusBar;
 HWND activeCompanyLabel;
 
 std::wstring activeCompanyName;
+int activeCompanyId = 0;
 
 // Button IDs
 
@@ -41,6 +43,7 @@ std::wstring activeCompanyName;
 #define ID_EXIT       107
 #define ID_ABOUT      108
 #define ID_ACCOUNTS   109
+#define ID_OPENING 110
 
 // Create a label
 
@@ -154,6 +157,7 @@ void CreateMainMenu(HWND hwnd) {
         L"Фактури"
     );
 
+    AppendMenuW(accountingMenu, MF_STRING, ID_OPENING, L"Начални салда");
     HMENU reportsMenu = CreatePopupMenu();
 
     AppendMenuW(
@@ -338,7 +342,7 @@ void CreateInterface(HWND hwnd) {
 
     statusBar = CreateLabel(
         hwnd,
-        L"Версия 0.0.2\n\n",
+        L"Версия 0.0.4\n\n",
         10, 0, 900, 25,
         normalFont
     );
@@ -383,6 +387,15 @@ LRESULT CALLBACK WindowProc(
                 CreateSolidBrush(COLOR_WHITE);
 
             CreateInterface(hwnd);
+            if (InitializeCompanies()) {
+                Company c;
+                if (RestoreActiveCompany(c)) {
+                    activeCompanyId = c.id;
+                    activeCompanyName = c.name;
+                    SetWindowTextW(activeCompanyLabel, c.name.c_str());
+                    SetWindowTextW(statusBar, (L"AME v0.0.4   |   " + c.name).c_str());
+                }
+            } else MessageBoxW(hwnd, GetCompanyError().c_str(), L"AME", MB_OK | MB_ICONERROR);
 
             return 0;
 
@@ -581,14 +594,19 @@ LRESULT CALLBACK WindowProc(
 
                 case ID_COMPANIES:
                 {
-                    std::wstring selectedCompany;
+                    Company selectedCompany;
 
                     if (ShowCompaniesWindow(
                         hwnd,
                         selectedCompany
                     ))
                     {
-                        activeCompanyName = selectedCompany;
+                        if (!RememberActiveCompany(selectedCompany.id)) {
+                            MessageBoxW(hwnd, L"Не може да се запази активната фирма.", L"AME", MB_OK | MB_ICONERROR);
+                            return 0;
+                        }
+                        activeCompanyId = selectedCompany.id;
+                        activeCompanyName = selectedCompany.name;
 
                         SetWindowTextW(
                             activeCompanyLabel,
@@ -596,7 +614,7 @@ LRESULT CALLBACK WindowProc(
                         );
 
                         std::wstring status =
-                            L"AME v0.0.3   |   " +
+                            L"AME v0.0.4   |   " +
                             activeCompanyName;
 
                         SetWindowTextW(
@@ -634,9 +652,9 @@ LRESULT CALLBACK WindowProc(
                     return 0;
 
                 case ID_ACCOUNTS:
-                    ShowModule(
-                        hwnd, L"Сметкоплан"
-                    );
+                case ID_OPENING:
+                    if (!activeCompanyId) MessageBoxW(hwnd, L"Първо изберете фирма.", L"AME", MB_OK | MB_ICONWARNING);
+                    else ShowAccountingWindow(hwnd, activeCompanyId, activeCompanyName, LOWORD(wParam) == ID_OPENING);
                     return 0;
 
                 case ID_SETTINGS:
@@ -650,7 +668,7 @@ LRESULT CALLBACK WindowProc(
                     MessageBoxW(
                         hwnd,
                         L"AME - Accounting Made Easy\n"
-                        L"Версия 0.0.2\n\n"
+                        L"Версия 0.0.4\n\n"
                         L"Български счетоводен софтуер",
                         L"За AME",
                         MB_OK | MB_ICONINFORMATION

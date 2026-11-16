@@ -21,7 +21,7 @@ struct CompanyWindowState
 
     int editingId = 0;
 
-    std::wstring selectedName;
+    Company selectedCompany;
 
     bool selected = false;
     bool closed = false;
@@ -488,8 +488,7 @@ static LRESULT CALLBACK CompaniesProc(
                         return 0;
                     }
 
-                    state->selectedName =
-                        state->companies[index].name;
+                    state->selectedCompany = state->companies[index];
 
                     state->selected = true;
 
@@ -528,7 +527,7 @@ static LRESULT CALLBACK CompaniesProc(
 
 bool ShowCompaniesWindow(
     HWND parent,
-    std::wstring& selectedCompany
+    Company& selectedCompany
 )
 {
     if (!InitializeCompanies())
@@ -646,7 +645,7 @@ bool ShowCompaniesWindow(
 
     if (state.selected)
     {
-        selectedCompany = state.selectedName;
+        selectedCompany = state.selectedCompany;
         return true;
     }
 

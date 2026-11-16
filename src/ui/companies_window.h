@@ -2,8 +2,9 @@
 
 #include <windows.h>
 #include <string>
+#include "../data/company.h"
 
 bool ShowCompaniesWindow(
     HWND parent,
-    std::wstring& selectedCompany
+    Company& selectedCompany
 );
