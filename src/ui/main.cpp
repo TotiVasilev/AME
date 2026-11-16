@@ -4,7 +4,7 @@
 
 // =====================================
 // AME - Accounting Made Easy
-// Version 0.0.5
+// Version 0.1.0
 // =====================================
 
 // Application colors
@@ -342,7 +342,7 @@ void CreateInterface(HWND hwnd) {
 
     statusBar = CreateLabel(
         hwnd,
-        L"Версия 0.0.5\n\n",
+        L"Версия 0.1.0\n\n",
         10, 0, 900, 25,
         normalFont
     );
@@ -393,7 +393,7 @@ LRESULT CALLBACK WindowProc(
                     activeCompanyId = c.id;
                     activeCompanyName = c.name;
                     SetWindowTextW(activeCompanyLabel, c.name.c_str());
-                    SetWindowTextW(statusBar, (L"AME v0.0.5   |   " + c.name).c_str());
+                    SetWindowTextW(statusBar, (L"AME v0.1.0   |   " + c.name).c_str());
                 }
             } else MessageBoxW(hwnd, GetCompanyError().c_str(), L"AME", MB_OK | MB_ICONERROR);
 
@@ -614,7 +614,7 @@ LRESULT CALLBACK WindowProc(
                         );
 
                         std::wstring status =
-                            L"AME v0.0.5   |   " +
+                            L"AME v0.1.0   |   " +
                             activeCompanyName;
 
                         SetWindowTextW(
@@ -638,15 +638,13 @@ LRESULT CALLBACK WindowProc(
                     return 0;
 
                 case ID_INVOICES:
-                    ShowModule(
-                        hwnd, L"Фактури"
-                    );
+                    if (!activeCompanyId) MessageBoxW(hwnd,L"Първо изберете фирма.",L"AME",MB_OK);
+                    else ShowPrototypeWindow(hwnd,activeCompanyId,activeCompanyName,0);
                     return 0;
 
                 case ID_REPORTS:
-                    ShowModule(
-                        hwnd, L"Справки"
-                    );
+                    if (!activeCompanyId) MessageBoxW(hwnd,L"Първо изберете фирма.",L"AME",MB_OK);
+                    else ShowPrototypeWindow(hwnd,activeCompanyId,activeCompanyName,1);
                     return 0;
 
                 case ID_ACCOUNTS:
@@ -656,9 +654,8 @@ LRESULT CALLBACK WindowProc(
                     return 0;
 
                 case ID_SETTINGS:
-                    ShowModule(
-                        hwnd, L"Настройки"
-                    );
+                    if (!activeCompanyId) MessageBoxW(hwnd,L"Първо изберете фирма.",L"AME",MB_OK);
+                    else ShowPrototypeWindow(hwnd,activeCompanyId,activeCompanyName,2);
                     return 0;
 
                 case ID_ABOUT:
@@ -666,7 +663,7 @@ LRESULT CALLBACK WindowProc(
                     MessageBoxW(
                         hwnd,
                         L"AME - Accounting Made Easy\n"
-                        L"Версия 0.0.5\n\n"
+                        L"Версия 0.1.0\n\n"
                         L"Български счетоводен софтуер",
                         L"За AME",
                         MB_OK | MB_ICONINFORMATION
