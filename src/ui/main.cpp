@@ -4,7 +4,7 @@
 
 // =====================================
 // AME - Accounting Made Easy
-// Version 0.0.4
+// Version 0.0.5
 // =====================================
 
 // Application colors
@@ -342,7 +342,7 @@ void CreateInterface(HWND hwnd) {
 
     statusBar = CreateLabel(
         hwnd,
-        L"Версия 0.0.4\n\n",
+        L"Версия 0.0.5\n\n",
         10, 0, 900, 25,
         normalFont
     );
@@ -393,7 +393,7 @@ LRESULT CALLBACK WindowProc(
                     activeCompanyId = c.id;
                     activeCompanyName = c.name;
                     SetWindowTextW(activeCompanyLabel, c.name.c_str());
-                    SetWindowTextW(statusBar, (L"AME v0.0.4   |   " + c.name).c_str());
+                    SetWindowTextW(statusBar, (L"AME v0.0.5   |   " + c.name).c_str());
                 }
             } else MessageBoxW(hwnd, GetCompanyError().c_str(), L"AME", MB_OK | MB_ICONERROR);
 
@@ -614,7 +614,7 @@ LRESULT CALLBACK WindowProc(
                         );
 
                         std::wstring status =
-                            L"AME v0.0.4   |   " +
+                            L"AME v0.0.5   |   " +
                             activeCompanyName;
 
                         SetWindowTextW(
@@ -633,10 +633,8 @@ LRESULT CALLBACK WindowProc(
                 }
 
                 case ID_OPERATIONS:
-                    ShowModule(
-                        hwnd,
-                        L"Счетоводни операции"
-                    );
+                    if (!activeCompanyId) MessageBoxW(hwnd, L"Първо изберете фирма.", L"AME", MB_OK | MB_ICONWARNING);
+                    else ShowJournalWindow(hwnd, activeCompanyId, activeCompanyName);
                     return 0;
 
                 case ID_INVOICES:
@@ -668,7 +666,7 @@ LRESULT CALLBACK WindowProc(
                     MessageBoxW(
                         hwnd,
                         L"AME - Accounting Made Easy\n"
-                        L"Версия 0.0.4\n\n"
+                        L"Версия 0.0.5\n\n"
                         L"Български счетоводен софтуер",
                         L"За AME",
                         MB_OK | MB_ICONINFORMATION

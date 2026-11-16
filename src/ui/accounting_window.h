@@ -5,3 +5,5 @@
 bool RememberActiveCompany(int id);
 bool RestoreActiveCompany(Company& company);
 void ShowAccountingWindow(HWND parent, int id, const std::wstring& name, bool opening);
+
+void ShowJournalWindow(HWND parent, int id, const std::wstring& name);
