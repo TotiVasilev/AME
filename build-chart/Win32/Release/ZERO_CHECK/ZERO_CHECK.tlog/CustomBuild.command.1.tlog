@@ -1,0 +1,10 @@
+^C:\USERS\TODOR\DOCUMENTS\AME\BUILD-CHART\CMAKEFILES\D4B3EB8F12DD023C910B211E9821D3F3\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/todor/Documents/AME -BC:/Users/todor/Documents/AME/build-chart --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/todor/Documents/AME/build-chart/AME.slnx
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

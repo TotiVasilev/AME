@@ -1,0 +1,11 @@
+AME v0.3.0 Build Fix
+
+Fixes error C3538 in src/ui/extra_modules.cpp at original line 130.
+No functionality, CMake, database schema, or other source file changed.
+
+Build:
+cd /d C:\Users\todor\Documents\AME
+cmake --build build-v030 --config Release
+build-v030\Release\AME.exe
+
+Do not run the EXE if the build fails. It may be an older executable.

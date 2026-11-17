@@ -1,0 +1,4 @@
+C:/Users/todor/Documents/AME/build-v060/CMakeFiles/sqlite3.dir
+C:/Users/todor/Documents/AME/build-v060/CMakeFiles/AME.dir
+C:/Users/todor/Documents/AME/build-v060/CMakeFiles/ALL_BUILD.dir
+C:/Users/todor/Documents/AME/build-v060/CMakeFiles/ZERO_CHECK.dir

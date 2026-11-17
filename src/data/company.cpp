@@ -1,4 +1,5 @@
 #include "company.h"
+#include "chart_template.h"
 #include <windows.h>
 #include <shlobj.h>
 #include <sqlite3.h>
@@ -140,6 +141,8 @@ bool SaveCompany(Company& company)
 
     const char* sql;
 
+    const bool isNewCompany = (company.id == 0);
+
     if (company.id == 0)
     {
         sql =
@@ -230,6 +233,15 @@ bool SaveCompany(Company& company)
     sqlite3_finalize(stmt);
     sqlite3_close(db);
 
+    if (success && isNewCompany)
+    {
+        std::wstring templateError;
+        if (!InitializeCompanyChart(company.id, &templateError))
+        {
+            lastError = L"Фирмата е записана, но сметкопланът не можа да се създаде: " + templateError;
+            return false; // Existing registration stays saved; its ID is preserved.
+        }
+    }
     return success;
 }
 

@@ -1,0 +1,6 @@
+AME 0.1.0 prototype preview. Back up %LOCALAPPDATA%\AME before testing. Use fictional data.
+Build: cmake --build build --config Release
+Run: build\Release\AME.exe
+Create accounts 401,411,501,601,701 and 4531/4532 (VAT accounts) before invoice tests.
+Invoices: add partner, use its displayed ID, enter date, number, item, whole quantity, unit price, VAT amount and base account. Purchase posts debit base and VAT, credit 401; sale posts debit 411, credit revenue and VAT. Only unpaid domestic standard transactions are modeled. Payments button accepts invoice ID, amount, date and cash/bank account. Reports: use exact opening balance date as start, and end date. CSV export is UTF-16 text with semicolon delimiters; use a new full filename. Settings: backup to new path; restore replaces selected company ledger, so use only its own backup. Company note is saved locally.
+Limitations: single item per invoice, manual VAT amount, no invoice print, no legal invoice generation, no independent cash/bank transactions beyond journal and invoice payments, no partner editing, no statutory reports, no audit trail. Reports use exact opening date and do not carry prior movements automatically. Linked journal entries cannot be edited directly. Windows build and XP runtime not tested by author.
